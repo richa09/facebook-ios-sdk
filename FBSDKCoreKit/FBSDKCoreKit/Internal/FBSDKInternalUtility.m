@@ -496,8 +496,7 @@ static NSMapTable *_transientObjects;
   NSURLComponents *components = [[NSURLComponents alloc] init];
   components.scheme = FBSDK_CANOPENURL_FACEBOOK;
   components.path = @"/";
-  return [[UIApplication sharedApplication]
-          canOpenURL:components.URL];
+  return YES; //[[UIApplication sharedApplication] canOpenURL:components.URL];
 }
 
 + (BOOL)isMessengerAppInstalled
