@@ -208,6 +208,16 @@ static NSString *const FBSDKLoginManagerLoggerTryWebView = @"tryFallback";
   }];
 }
 
+- (void)logNativeAppDialogResult:(BOOL)result dialogDuration:(NSTimeInterval)dialogDuration
+{
+  NSOperatingSystemVersion iOS10Version = { .majorVersion = 10, .minorVersion = 0, .patchVersion = 0 };
+  if ([FBSDKInternalUtility isOSRunTimeVersionAtLeast:iOS10Version]) {
+    _extras[@"native_app_login_dialog_duration"] = @(dialogDuration);
+    _extras[@"native_app_login_dialog_result"] = @(result);
+    [self logEvent:FBSDLAppEventNameFBSDKEventShareDialogResult params:[self _parametersForNewEvent]];
+  }
+}
+
 #pragma mark - Private
 
 - (NSString *)clientStateForAuthMethod:(NSString *)authMethod andExistingState:(NSDictionary *)existingState
